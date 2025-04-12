@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 // import { encryptKey, decryptKey } from "@/utils/lib/secureStorage";
 import { Ionicons } from "@expo/vector-icons";
 import OTPComponent from "./OtpInput";
@@ -15,39 +8,25 @@ import { COLORS } from "@/constants/Colors";
 const PasskeyModal = ({
   visible,
   setVisible,
-  setState,
+  openModal,
 }: {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setState: React.Dispatch<React.SetStateAction<string>>;
+  openModal: (state: string) => void;
 }) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [error, setError] = useState("");
-
-  //   useEffect(() => {
-  //     (async () => {
-  //       const encryptedKey = await decryptKey("accessKey");
-  //       if (encryptedKey === VERIFICATION_CODE) {
-  //         setVisible(false);
-  //       }
-  //     })();
-  //   }, []);
 
   const handleClose = () => {
     setVisible(false);
   };
 
-  // console.log(VERIFICATION_CODE);
-
   const handleValidate = async () => {
     const otpString = otp.join("");
 
-    // console.log(otpString);
-    // console.log(process.env.EXPO_PUBLIC_VERIFICATION_CODE);
-
     if (otpString) {
       setVisible(false);
-      setState("register");
+      openModal("register");
     } else {
       setError("Invalid otp, please try again.");
     }

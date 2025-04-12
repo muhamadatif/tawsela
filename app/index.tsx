@@ -2,22 +2,31 @@ import { View, Text, SafeAreaView, StyleSheet } from "react-native";
 import React, { useRef, useState } from "react";
 import { COLORS } from "@/constants/Colors";
 import Logo from "@/components/Logo";
-import BottomSheet from "@/components/BottomSheet";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import Button from "@/components/Button";
+import AuthModal from "@/components/AuthModal";
+import SignupModal from "@/components/SignupModal";
+import RegisterModal from "@/components/RegisterModal";
+import LoginModal from "@/components/LoginModal";
 
 const WelcomePage = () => {
-  const [state, setState] = useState("");
+  // const [state, setState] = useState("");
 
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const signupRef = useRef<BottomSheetModal>(null);
+  const loginRef = useRef<BottomSheetModal>(null);
+  const registerRef = useRef<BottomSheetModal>(null);
   const openModal = (state: string) => {
-    bottomSheetRef.current?.present();
-    setState(state);
+    state === "signup" && signupRef.current?.present();
+    state === "login" && loginRef.current?.present();
+    state === "register" && registerRef.current?.present();
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <BottomSheet ref={bottomSheetRef} state={state} setState={setState} />
+      {/* <AuthModal ref={bottomSheetRef} state={state} setState={setState} /> */}
+      <SignupModal ref={signupRef} openModal={openModal} />
+      <LoginModal ref={loginRef} openModal={openModal} />
+      <RegisterModal ref={registerRef} />
       <Logo />
       <View style={styles.headerContainer}>
         <Text style={styles.header}>The experience of buying food quickly</Text>

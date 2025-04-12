@@ -14,6 +14,8 @@ import Animated, {
 import { COLORS } from "@/constants/Colors";
 import Login from "./Login";
 import Signup from "./Signup";
+import Register from "./Register";
+import BottomSheetComponent from "./BottomSheetComponent";
 
 type Props = {
   state: string;
@@ -21,23 +23,11 @@ type Props = {
 };
 
 type Ref = BottomSheetModal;
-const BottomSheet = forwardRef<Ref, Props>((props, ref) => {
-  const snapPoints = useMemo(() => ["75%"], []);
+const AuthModal = forwardRef<Ref, Props>((props, ref) => {
   const { state, setState } = props;
-
-  const renderBackdrop = useCallback(
-    (props: any) => (
-      <BottomSheetBackdrop
-        {...props}
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-      />
-    ),
-    []
-  );
-
   const loginOpacity = useSharedValue(state === "login" ? 1 : 0);
   const signupOpacity = useSharedValue(state === "signup" ? 1 : 0);
+  const registerOpacity = useSharedValue(state === "register" ? 1 : 0);
 
   useEffect(() => {
     if (state === "login") {
@@ -49,12 +39,33 @@ const BottomSheet = forwardRef<Ref, Props>((props, ref) => {
         duration: 300,
         easing: Easing.inOut(Easing.ease),
       });
-    } else {
+      registerOpacity.value = withTiming(0, {
+        duration: 300,
+        easing: Easing.inOut(Easing.ease),
+      });
+    } else if (state === "signup") {
       loginOpacity.value = withTiming(0, {
         duration: 300,
         easing: Easing.inOut(Easing.ease),
       });
       signupOpacity.value = withTiming(1, {
+        duration: 300,
+        easing: Easing.inOut(Easing.ease),
+      });
+      registerOpacity.value = withTiming(0, {
+        duration: 300,
+        easing: Easing.inOut(Easing.ease),
+      });
+    } else if (state === "register") {
+      loginOpacity.value = withTiming(0, {
+        duration: 300,
+        easing: Easing.inOut(Easing.ease),
+      });
+      signupOpacity.value = withTiming(0, {
+        duration: 300,
+        easing: Easing.inOut(Easing.ease),
+      });
+      registerOpacity.value = withTiming(1, {
         duration: 300,
         easing: Easing.inOut(Easing.ease),
       });
@@ -64,37 +75,35 @@ const BottomSheet = forwardRef<Ref, Props>((props, ref) => {
   const loginStyle = useAnimatedStyle(() => ({
     opacity: loginOpacity.value,
     // Optional: Add slight vertical movement
-    transform: [{ translateX: (1 - loginOpacity.value) * 500 }],
+    transform: [{ translateX: (1 - loginOpacity.value) * 700 }],
   }));
 
   const signupStyle = useAnimatedStyle(() => ({
     opacity: signupOpacity.value,
     // Optional: Add slight vertical movement
-    transform: [{ translateX: (1 - signupOpacity.value) * 500 }],
+    transform: [{ translateX: (1 - signupOpacity.value) * 700 }],
+  }));
+  const registerStyle = useAnimatedStyle(() => ({
+    opacity: registerOpacity.value,
+    // Optional: Add slight vertical movement
+    transform: [{ translateX: (1 - registerOpacity.value) * 700 }],
   }));
 
   return (
-    <BottomSheetModal
-      ref={ref}
-      snapPoints={snapPoints}
-      overDragResistanceFactor={0}
-      backdropComponent={renderBackdrop}
-      backgroundStyle={{ borderRadius: 20, backgroundColor: COLORS.gray[100] }}
-      handleIndicatorStyle={{ backgroundColor: COLORS.gray[300], width: 50 }}
-    >
-      <BottomSheetView style={styles.container}>
-        {/* Animated Views */}
-        <View style={styles.contentContainer}>
-          <Animated.View style={[styles.animatedView, loginStyle]}>
-            <Login setState={setState} />
-          </Animated.View>
+    <BottomSheetComponent ref={ref}>
+      <View style={styles.contentContainer}>
+        <Animated.View style={[styles.animatedView, loginStyle]}>
+          <Login setState={setState} />
+        </Animated.View>
 
-          <Animated.View style={[styles.animatedView, signupStyle]}>
-            <Signup setState={setState} />
-          </Animated.View>
-        </View>
-      </BottomSheetView>
-    </BottomSheetModal>
+        <Animated.View style={[styles.animatedView, signupStyle]}>
+          <Signup setState={setState} />
+        </Animated.View>
+        <Animated.View style={[styles.animatedView, registerStyle]}>
+          <Register />
+        </Animated.View>
+      </View>
+    </BottomSheetComponent>
   );
 });
 
@@ -119,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomSheet;
+export default AuthModal;
