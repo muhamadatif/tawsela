@@ -1,17 +1,23 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import React from "react";
+import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import React, { useRef, useState } from "react";
 import { COLORS } from "@/constants/Colors";
 import Logo from "@/components/Logo";
+import BottomSheet from "@/components/BottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import Button from "@/components/Button";
 
 const WelcomePage = () => {
+  const [state, setState] = useState("");
+
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
+  const openModal = (state: string) => {
+    bottomSheetRef.current?.present();
+    setState(state);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      <BottomSheet ref={bottomSheetRef} state={state} setState={setState} />
       <Logo />
       <View style={styles.headerContainer}>
         <Text style={styles.header}>The experience of buying food quickly</Text>
@@ -20,20 +26,16 @@ const WelcomePage = () => {
         </Text>
       </View>
       <View style={styles.actionContainer}>
-        <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: COLORS.secondary }]}
-        >
-          <Text style={[styles.actionText, { color: COLORS.white }]}>
-            Sign Up
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.actionButton, { backgroundColor: COLORS.gray[100] }]}
-        >
-          <Text style={[styles.actionText, { color: COLORS.gray[900] }]}>
-            Login
-          </Text>
-        </TouchableOpacity>
+        <Button
+          buttonText="Sign Up"
+          onPress={() => openModal("signup")}
+          type="secondary"
+        />
+        <Button
+          buttonText="Login"
+          onPress={() => openModal("login")}
+          type="tertiary"
+        />
       </View>
     </SafeAreaView>
   );
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     paddingHorizontal: 16,
+    paddingTop: 80,
   },
   headerContainer: {
     gap: 10,
@@ -61,15 +64,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   actionContainer: { width: "100%", paddingHorizontal: 16, gap: 16 },
-  actionButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-    borderRadius: 10,
-  },
-  actionText: {
-    fontWeight: "bold",
-  },
 });
 
 export default WelcomePage;

@@ -13,4 +13,6 @@ export const COLORS = {
     "900": "#1a202c",
   },
   white: "#fff",
+  danger: "red",
+  black: "#000",
 };

@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Animated, Easing, Dimensions } from "react-native";
 import { Image } from "expo-image";
-import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/Colors";
 import UserPin from "./UserPin";
 
-const SIZE = 210;
+const SIZE = 250;
 
 const Logo = () => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
@@ -124,22 +123,22 @@ const Logo = () => {
       >
         <OrbitingIcon
           angle={270}
-          image={require("@/assets/images/delivery-man.png")}
+          image={require("@/assets/images/person1-location-24.png")}
         />
         <OrbitingIcon
           angle={30}
-          image={require("@/assets/images/delivery-man.png")}
+          image={require("@/assets/images/person2-location-24.png")}
         />
         <OrbitingIcon
           angle={150}
-          image={require("@/assets/images/delivery-man.png")}
+          image={require("@/assets/images/person3-location-24.png")}
         />
       </Animated.View>
 
       {/* Central Logo */}
       <View style={styles.logoContainer}>
         <Image
-          source={require("@/assets/images/delivery-man.png")}
+          source={require("@/assets/images/tawsela-home-logo.png")}
           style={styles.logo}
         />
       </View>
