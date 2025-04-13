@@ -11,10 +11,12 @@ import { registerSchema, signupSchema } from "@/schemas/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "expo-router";
 
 type Ref = BottomSheetModal;
 
 const RegisterModal = forwardRef<Ref>((props, ref) => {
+  const router = useRouter();
   const {
     control,
     handleSubmit,
@@ -25,7 +27,9 @@ const RegisterModal = forwardRef<Ref>((props, ref) => {
     mode: "onTouched",
   });
 
-  const onSubmit = (data: any) => {};
+  const onSubmit = (data: any) => {
+    router.replace("/home");
+  };
 
   return (
     <BottomSheetComponent ref={ref} onDismiss={() => reset()}>
@@ -63,6 +67,7 @@ const RegisterModal = forwardRef<Ref>((props, ref) => {
             name="password"
             control={control}
             error={errors.password?.message}
+            secureTextEntry
           />
           <FormField
             label={"Confirm Password*"}
@@ -71,6 +76,7 @@ const RegisterModal = forwardRef<Ref>((props, ref) => {
             name="confirmPassword"
             control={control}
             error={errors.confirmPassword?.message}
+            secureTextEntry
           />
 
           <Button buttonText="Register" onPress={handleSubmit(onSubmit)} />

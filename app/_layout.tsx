@@ -24,6 +24,14 @@ export default function RootLayout() {
               headerTransparent: true,
             }}
           />
+          <Stack.Screen
+            name="home"
+            options={{
+              presentation: "fullScreenModal",
+              headerTitle: "",
+              headerTransparent: true,
+            }}
+          />
         </Stack>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>

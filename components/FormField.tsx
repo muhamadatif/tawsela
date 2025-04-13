@@ -10,6 +10,7 @@ interface FormFieldProps {
   name: any;
   control: Control<any>;
   error: string | undefined;
+  secureTextEntry?: boolean;
 }
 const FormField = ({
   label,
@@ -18,6 +19,7 @@ const FormField = ({
   name,
   control,
   error,
+  secureTextEntry,
 }: FormFieldProps) => {
   return (
     <View style={styles.formField}>
@@ -29,6 +31,7 @@ const FormField = ({
           name={name}
           render={({ field: { onChange, value } }) => (
             <TextInput
+              secureTextEntry={secureTextEntry}
               placeholder={placeholder}
               style={styles.input}
               placeholderTextColor={COLORS.gray[600]} // Change placeholder text color
