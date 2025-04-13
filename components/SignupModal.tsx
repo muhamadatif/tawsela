@@ -18,6 +18,10 @@ import BottomSheetComponent from "./BottomSheetComponent";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { ScrollView } from "react-native-gesture-handler";
 import { useKeyboardVisibility } from "@/hooks/useKeyboardVisibility";
+import { loginSchema, signupSchema } from "@/schemas/authSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 type Props = {
   openModal: (state: string) => void;
@@ -25,17 +29,28 @@ type Props = {
 type Ref = BottomSheetModal;
 
 const SignupModal = forwardRef<Ref, Props>(({ openModal }, ref) => {
-  const [phone, setphone] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const isKeyboardVisible = useKeyboardVisibility();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const onSubmit = (data: any) => {
+    openModal("verification");
+  };
 
   return (
-    <BottomSheetComponent ref={ref}>
+    <BottomSheetComponent ref={ref} onDismiss={() => reset()}>
       <ScrollView
         style={styles.container}
-        contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 10 : 0 }}
+        contentContainerStyle={{ paddingBottom: 180 }}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
         <View style={styles.headerContainer}>
           <Text style={styles.header}>Welcome 👋</Text>
@@ -48,12 +63,13 @@ const SignupModal = forwardRef<Ref, Props>(({ openModal }, ref) => {
             label={"Phone Number*"}
             icon={<Ionicons name="call-outline" size={16} />}
             placeholder="Enter your phone number..."
-            value={phone}
-            setValue={setphone}
+            name="phone"
+            control={control}
+            error={errors.phone?.message}
           />
 
           <View style={styles.row}></View>
-          <Button buttonText="Sign Up" onPress={() => setVisible(true)} />
+          <Button buttonText="Sign Up" onPress={handleSubmit(onSubmit)} />
         </View>
         <View
           style={{
@@ -80,11 +96,6 @@ const SignupModal = forwardRef<Ref, Props>(({ openModal }, ref) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <PasskeyModal
-          visible={visible}
-          setVisible={setVisible}
-          openModal={openModal}
-        />
       </ScrollView>
     </BottomSheetComponent>
   );

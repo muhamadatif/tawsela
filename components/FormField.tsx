@@ -1,34 +1,44 @@
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import React from "react";
 import { COLORS } from "@/constants/Colors";
+import { useForm, Controller, Control } from "react-hook-form";
 
 interface FormFieldProps {
   label: string;
   icon: React.ReactNode;
   placeholder: string;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  name: any;
+  control: Control<any>;
+  error: string | undefined;
 }
 const FormField = ({
   label,
   icon,
   placeholder,
-  value,
-  setValue,
+  name,
+  control,
+  error,
 }: FormFieldProps) => {
   return (
     <View style={styles.formField}>
       <Text style={styles.label}>{label}</Text>
       <View style={styles.inputContainer}>
         {icon}
-        <TextInput
-          placeholder={placeholder}
-          style={styles.input}
-          placeholderTextColor={COLORS.gray[600]} // Change placeholder text color
-          value={value}
-          onChangeText={setValue}
+        <Controller
+          control={control}
+          name={name}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              placeholder={placeholder}
+              style={styles.input}
+              placeholderTextColor={COLORS.gray[600]} // Change placeholder text color
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
         />
       </View>
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
@@ -57,6 +67,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.gray[900],
     width: "100%",
+  },
+  error: {
+    color: COLORS.danger,
+    fontWeight: "bold",
   },
 });
 

@@ -1,30 +1,52 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { COLORS } from "@/constants/Colors";
 import Logo from "@/components/Logo";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import Button from "@/components/Button";
-import AuthModal from "@/components/AuthModal";
 import SignupModal from "@/components/SignupModal";
 import RegisterModal from "@/components/RegisterModal";
 import LoginModal from "@/components/LoginModal";
+import VerificationModal from "@/components/VerificationModal";
 
 const WelcomePage = () => {
-  // const [state, setState] = useState("");
-
   const signupRef = useRef<BottomSheetModal>(null);
+  const VerificationRef = useRef<BottomSheetModal>(null);
   const loginRef = useRef<BottomSheetModal>(null);
   const registerRef = useRef<BottomSheetModal>(null);
   const openModal = (state: string) => {
-    state === "signup" && signupRef.current?.present();
-    state === "login" && loginRef.current?.present();
-    state === "register" && registerRef.current?.present();
+    if (state === "signup") {
+      signupRef.current?.present();
+      VerificationRef.current?.dismiss();
+      loginRef.current?.dismiss();
+      registerRef.current?.dismiss();
+    }
+    if (state === "verification") {
+      VerificationRef.current?.present();
+      registerRef.current?.dismiss();
+      signupRef.current?.dismiss();
+      loginRef.current?.dismiss();
+    }
+    if (state === "login") {
+      loginRef.current?.present();
+      signupRef.current?.dismiss();
+      VerificationRef.current?.dismiss();
+      registerRef.current?.dismiss();
+    }
+
+    if (state === "register") {
+      registerRef.current?.present();
+      signupRef.current?.dismiss();
+      VerificationRef.current?.dismiss();
+      loginRef.current?.dismiss();
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <AuthModal ref={bottomSheetRef} state={state} setState={setState} /> */}
       <SignupModal ref={signupRef} openModal={openModal} />
+      <VerificationModal ref={VerificationRef} openModal={openModal} />
+
       <LoginModal ref={loginRef} openModal={openModal} />
       <RegisterModal ref={registerRef} />
       <Logo />
