@@ -3,9 +3,9 @@ import React from "react";
 import { COLORS } from "@/constants/Colors";
 
 const TYPE = {
-  primary: COLORS.primary,
+  primary: COLORS.secondary,
   secondary: COLORS.secondary,
-  tertiary: COLORS.gray[100],
+  tertiary: COLORS.tertiary,
 };
 
 const Button = ({
@@ -25,7 +25,7 @@ const Button = ({
       <Text
         style={[
           styles.buttonText,
-          { color: type === "tertiary" ? COLORS.primary : COLORS.white },
+          { color: type === "tertiary" ? COLORS.secondary : COLORS.white },
         ]}
       >
         {buttonText}

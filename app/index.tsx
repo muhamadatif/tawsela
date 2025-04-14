@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    color: COLORS.greyDark,
+    color: COLORS.secondary,
   },
   subHeader: {
     color: COLORS.secondary,
@@ -103,7 +103,6 @@ const styles = StyleSheet.create({
   },
   actionContainer: {
     marginTop: -30,
-
     width: "90%",
     gap: 16,
   },

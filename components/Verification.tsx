@@ -10,6 +10,7 @@ import {
 import { COLORS } from "@/constants/Colors";
 
 import { OtpInput } from "react-native-otp-entry";
+import Button from "./Button";
 
 const Verification = ({
   mobile,
@@ -22,7 +23,7 @@ const Verification = ({
   const [error, setError] = useState("");
 
   const handleValidate = async () => {
-    const res = await fetch("http://www.domain.com/register/verify-mobile", {
+    const res = await fetch("https://localhost:7211/register/verify-mobile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,9 +62,7 @@ const Verification = ({
           type="alphanumeric"
         />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleValidate}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+      <Button buttonText="Submit" onPress={handleValidate} />
     </ScrollView>
   );
 };
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
   button: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.secondary,
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 8,

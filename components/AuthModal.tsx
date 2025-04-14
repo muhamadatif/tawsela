@@ -1,19 +1,11 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Dimensions,
   Keyboard,
-  Platform,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -23,7 +15,6 @@ import Animated, {
 import Login from "./Login";
 import Signup from "./Signup";
 import Register from "./Register";
-import BottomSheetComponent from "./BottomSheetComponent";
 import Verification from "./Verification";
 
 type Props = {
@@ -37,6 +28,7 @@ const AuthModal = (props: Props) => {
   const { state, setState, firstRender, setFirstRender } = props;
   const [mobile, setMobile] = useState("");
   const { width } = Dimensions.get("window");
+  console.log(state);
 
   const loginOpacity = useSharedValue(state === "login" ? 1 : 0);
   const signupOpacity = useSharedValue(state === "signup" ? 1 : 0);

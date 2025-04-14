@@ -36,7 +36,7 @@ const Signup = ({
   });
 
   const onSubmit = async (formData: any) => {
-    const res = await fetch("http://www.domain.com/register/sen-code", {
+    const res = await fetch("https://localhost:7211/register/sen-code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const Signup = ({
           <Text
             style={{
               fontWeight: "900",
-              color: COLORS.primary,
+              color: COLORS.primaryDark,
               fontSize: 16,
             }}
           >
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   header: {
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontWeight: "bold",
     fontSize: 30,
   },
