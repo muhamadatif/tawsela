@@ -12,11 +12,14 @@ type Props = {
   children: ReactNode;
   onDismiss?: () => void;
   snapPoints?: string[];
+  onChange?: (index: number) => void;
 };
 
 type Ref = BottomSheetModal;
 const BottomSheetComponent = forwardRef<Ref, Props>(
-  ({ children, onDismiss, snapPoints = ["75"] }, ref) => {
+  ({ children, onDismiss, onChange }, ref) => {
+    const snapPoints = useMemo(() => ["75%"], []);
+
     const renderBackdrop = useCallback(
       (props: any) => (
         <BottomSheetBackdrop
@@ -34,12 +37,14 @@ const BottomSheetComponent = forwardRef<Ref, Props>(
         snapPoints={snapPoints}
         overDragResistanceFactor={0}
         backdropComponent={renderBackdrop}
+        enableDynamicSizing={true}
         backgroundStyle={{
           borderRadius: 20,
           backgroundColor: COLORS.gray[100],
         }}
         handleIndicatorStyle={{ backgroundColor: COLORS.gray[300], width: 50 }}
         onDismiss={onDismiss}
+        onChange={onChange}
       >
         <BottomSheetView style={styles.container}>{children}</BottomSheetView>
       </BottomSheetModal>
@@ -50,6 +55,7 @@ const BottomSheetComponent = forwardRef<Ref, Props>(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    height: 800,
     padding: 16,
   },
 });

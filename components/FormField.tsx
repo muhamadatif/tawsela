@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, StyleSheet, Keyboard } from "react-native";
 import React from "react";
 import { COLORS } from "@/constants/Colors";
 import { useForm, Controller, Control } from "react-hook-form";
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.gray[900],
     width: "100%",
+    paddingVertical: 10,
   },
   error: {
     color: COLORS.danger,

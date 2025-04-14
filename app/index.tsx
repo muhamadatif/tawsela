@@ -1,54 +1,29 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { COLORS } from "@/constants/Colors";
 import Logo from "@/components/Logo";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import Button from "@/components/Button";
-import SignupModal from "@/components/SignupModal";
-import RegisterModal from "@/components/RegisterModal";
-import LoginModal from "@/components/LoginModal";
-import VerificationModal from "@/components/VerificationModal";
+import AuthModal from "@/components/AuthModal";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import BottomSheetComponent from "@/components/BottomSheetComponent";
+
+type Ref = BottomSheetModal;
 
 const WelcomePage = () => {
-  const signupRef = useRef<BottomSheetModal>(null);
-  const VerificationRef = useRef<BottomSheetModal>(null);
-  const loginRef = useRef<BottomSheetModal>(null);
-  const registerRef = useRef<BottomSheetModal>(null);
-  const openModal = (state: string) => {
-    if (state === "signup") {
-      signupRef.current?.present();
-      VerificationRef.current?.dismiss();
-      loginRef.current?.dismiss();
-      registerRef.current?.dismiss();
-    }
-    if (state === "verification") {
-      VerificationRef.current?.present();
-      registerRef.current?.dismiss();
-      signupRef.current?.dismiss();
-      loginRef.current?.dismiss();
-    }
-    if (state === "login") {
-      loginRef.current?.present();
-      signupRef.current?.dismiss();
-      VerificationRef.current?.dismiss();
-      registerRef.current?.dismiss();
-    }
-
-    if (state === "register") {
-      registerRef.current?.present();
-      signupRef.current?.dismiss();
-      VerificationRef.current?.dismiss();
-      loginRef.current?.dismiss();
-    }
-  };
+  const [state, setState] = useState("");
+  const [firstRender, setFirstRender] = useState(false);
+  const bottomSheetRef = useRef<Ref>(null);
 
   return (
     <SafeAreaView style={styles.container}>
-      <SignupModal ref={signupRef} openModal={openModal} />
-      <VerificationModal ref={VerificationRef} openModal={openModal} />
-
-      <LoginModal ref={loginRef} openModal={openModal} />
-      <RegisterModal ref={registerRef} />
+      <BottomSheetComponent ref={bottomSheetRef}>
+        <AuthModal
+          state={state}
+          setState={setState}
+          firstRender={firstRender}
+          setFirstRender={setFirstRender}
+        />
+      </BottomSheetComponent>
       <Logo />
       <View style={styles.headerContainer}>
         <Text style={styles.header}>The experience of buying food quickly</Text>
@@ -59,12 +34,20 @@ const WelcomePage = () => {
       <View style={styles.actionContainer}>
         <Button
           buttonText="Sign Up"
-          onPress={() => openModal("signup")}
+          onPress={() => {
+            setState("signup");
+            setFirstRender(true);
+            bottomSheetRef.current?.present();
+          }}
           type="secondary"
         />
         <Button
           buttonText="Login"
-          onPress={() => openModal("login")}
+          onPress={() => {
+            setState("login");
+            setFirstRender(true);
+            bottomSheetRef.current?.present();
+          }}
           type="tertiary"
         />
       </View>
@@ -83,6 +66,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     gap: 10,
+    paddingHorizontal: 16,
   },
   header: {
     color: COLORS.gray[100],

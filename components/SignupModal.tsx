@@ -1,24 +1,13 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Animated,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { forwardRef, useState } from "react";
 import { COLORS } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import FormField from "./FormField";
 import Button from "./Button";
-import PasskeyModal from "./PasskeyModal";
 import BottomSheetComponent from "./BottomSheetComponent";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { ScrollView } from "react-native-gesture-handler";
-import { useKeyboardVisibility } from "@/hooks/useKeyboardVisibility";
-import { loginSchema, signupSchema } from "@/schemas/authSchema";
+import { signupSchema } from "@/schemas/authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -29,8 +18,6 @@ type Props = {
 type Ref = BottomSheetModal;
 
 const SignupModal = forwardRef<Ref, Props>(({ openModal }, ref) => {
-  const [visible, setVisible] = useState(false);
-
   const {
     control,
     handleSubmit,
