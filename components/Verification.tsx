@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 import { COLORS } from "@/constants/Colors";
 
@@ -62,7 +56,6 @@ const Verification = ({
           numberOfDigits={6}
           onTextChange={(text) => setOtp(text)}
           autoFocus={false}
-          type="alphanumeric"
         />
       </View>
       <Button buttonText="Submit" onPress={handleValidate} />

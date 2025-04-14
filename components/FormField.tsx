@@ -1,4 +1,11 @@
-import { View, Text, TextInput, StyleSheet, Keyboard } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Keyboard,
+  KeyboardTypeOptions,
+} from "react-native";
 import React from "react";
 import { COLORS } from "@/constants/Colors";
 import { useForm, Controller, Control } from "react-hook-form";
@@ -11,6 +18,7 @@ interface FormFieldProps {
   control: Control<any>;
   error: string | undefined;
   secureTextEntry?: boolean;
+  keyboardType?: KeyboardTypeOptions | undefined;
 }
 const FormField = ({
   label,
@@ -20,6 +28,7 @@ const FormField = ({
   control,
   error,
   secureTextEntry,
+  keyboardType,
 }: FormFieldProps) => {
   return (
     <View style={styles.formField}>
@@ -31,6 +40,7 @@ const FormField = ({
           name={name}
           render={({ field: { onChange, value } }) => (
             <TextInput
+              keyboardType={keyboardType}
               secureTextEntry={secureTextEntry}
               placeholder={placeholder}
               style={styles.input}
@@ -52,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontWeight: "bold",
     fontSize: 16,
   },

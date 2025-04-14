@@ -23,9 +23,6 @@ const Signup = ({
 
   const isKeyboardVisible = useKeyboardVisibility();
 
-  useEffect(() => {
-    reset();
-  }, [isKeyboardVisible]);
   const {
     control,
     handleSubmit,
@@ -72,6 +69,7 @@ const Signup = ({
           name="mobile"
           control={control}
           error={errors.mobile?.message}
+          keyboardType="numeric"
         />
 
         <View style={styles.row}></View>

@@ -16,6 +16,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Register from "./Register";
 import Verification from "./Verification";
+import { useForm } from "react-hook-form";
 
 type Props = {
   state: string;
@@ -28,7 +29,7 @@ const AuthModal = (props: Props) => {
   const { state, setState, firstRender, setFirstRender } = props;
   const [mobile, setMobile] = useState("");
   const { width } = Dimensions.get("window");
-  console.log(state);
+  const { reset } = useForm();
 
   const loginOpacity = useSharedValue(state === "login" ? 1 : 0);
   const signupOpacity = useSharedValue(state === "signup" ? 1 : 0);
