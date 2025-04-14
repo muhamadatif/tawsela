@@ -1,6 +1,11 @@
 export const COLORS = {
-  primary: "#11192E",
-  secondary: "#ED592B",
+  primary: "#F8B619",
+  secondary: "#1E2733",
+  white: "#fff",
+  danger: "red",
+  black: "#000",
+  greyDark: "#1a202c",
+  tertiary: "#F2EFE8",
   gray: {
     "100": "#f7fafc",
     "200": "#edf2f7",
@@ -12,7 +17,4 @@ export const COLORS = {
     "800": "#2d3748",
     "900": "#1a202c",
   },
-  white: "#fff",
-  danger: "red",
-  black: "#000",
 };

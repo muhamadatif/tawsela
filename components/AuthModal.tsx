@@ -66,7 +66,7 @@ const AuthModal = (props: Props) => {
     const keys = Object.keys(opacityMap) as (keyof typeof opacityMap)[];
     keys.forEach((key) => {
       opacityMap[key].value = withTiming(state === key ? 1 : 0, {
-        duration: 200,
+        duration: 300,
         easing: Easing.inOut(Easing.ease),
       });
     });

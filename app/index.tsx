@@ -1,11 +1,17 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React, { useRef, useState } from "react";
 import { COLORS } from "@/constants/Colors";
-import Logo from "@/components/Logo";
 import Button from "@/components/Button";
 import AuthModal from "@/components/AuthModal";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import BottomSheetComponent from "@/components/BottomSheetComponent";
+import Logo from "@/components/Logo";
 
 type Ref = BottomSheetModal;
 
@@ -25,15 +31,26 @@ const WelcomePage = () => {
         />
       </BottomSheetComponent>
       <Logo />
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>The experience of buying food quickly</Text>
+      <View style={styles.headerSection}>
+        <View style={styles.headerContainer}>
+          <Text
+            style={[styles.headerText, { fontSize: 30, fontWeight: "400" }]}
+          >
+            Tawsela
+          </Text>
+          <Text
+            style={[styles.headerText, { fontSize: 40, fontWeight: "500" }]}
+          >
+            Home Delivery
+          </Text>
+        </View>
         <Text style={styles.subHeader}>
           A seamless and fast way to satisfy your hunger
         </Text>
       </View>
       <View style={styles.actionContainer}>
         <Button
-          buttonText="Sign Up"
+          buttonText="Create an account"
           onPress={() => {
             setState("signup");
             setFirstRender(true);
@@ -41,15 +58,18 @@ const WelcomePage = () => {
           }}
           type="secondary"
         />
-        <Button
-          buttonText="Login"
-          onPress={() => {
-            setState("login");
-            setFirstRender(true);
-            bottomSheetRef.current?.present();
-          }}
-          type="tertiary"
-        />
+        <View style={styles.row}>
+          <Text style={{ fontSize: 15 }}>Already have an account?</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setState("login");
+              setFirstRender(true);
+              bottomSheetRef.current?.present();
+            }}
+          >
+            <Text style={{ fontSize: 15, fontWeight: "bold" }}>Sign in</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -58,27 +78,41 @@ const WelcomePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.tertiary,
     justifyContent: "space-evenly",
     alignItems: "center",
     paddingHorizontal: 16,
-    paddingTop: 80,
+    paddingTop: 16,
   },
-  headerContainer: {
+  headerSection: {
+    marginTop: -60,
     gap: 10,
     paddingHorizontal: 16,
   },
-  header: {
-    color: COLORS.gray[100],
-    fontSize: 35,
-    fontWeight: "bold",
+  headerContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  headerText: {
+    color: COLORS.greyDark,
   },
   subHeader: {
-    color: COLORS.gray[500],
+    color: COLORS.secondary,
     fontWeight: "bold",
     fontSize: 14,
   },
-  actionContainer: { width: "100%", paddingHorizontal: 16, gap: 16 },
+  actionContainer: {
+    marginTop: -30,
+
+    width: "90%",
+    gap: 16,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 4,
+  },
 });
 
 export default WelcomePage;
