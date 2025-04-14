@@ -35,6 +35,7 @@ type Props = {
 
 const AuthModal = (props: Props) => {
   const { state, setState, firstRender, setFirstRender } = props;
+  const [mobile, setMobile] = useState("");
   const { width } = Dimensions.get("window");
 
   const loginOpacity = useSharedValue(state === "login" ? 1 : 0);
@@ -100,12 +101,12 @@ const AuthModal = (props: Props) => {
 
         {state === "signup" && (
           <Animated.View style={[styles.animatedView, signupStyle]}>
-            <Signup setState={setState} />
+            <Signup setState={setState} setMobile={setMobile} />
           </Animated.View>
         )}
         {state === "verification" && (
           <Animated.View style={[styles.animatedView, verificationStyle]}>
-            <Verification setState={setState} />
+            <Verification setState={setState} mobile={mobile} />
           </Animated.View>
         )}
         {state === "register" && (

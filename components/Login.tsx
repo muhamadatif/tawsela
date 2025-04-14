@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/authSchema";
 import Checkbox from "./Checkbox";
 import { useKeyboardVisibility } from "@/hooks/useKeyboardVisibility";
+import { useRouter } from "expo-router";
 
 const Login = ({
   setState,
@@ -19,6 +20,8 @@ const Login = ({
   setState: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
   const isKeyboardVisible = useKeyboardVisibility();
 
   const {
@@ -30,14 +33,28 @@ const Login = ({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: any) => {
-    const formData = { ...data, rememberMe: rememberMe };
+  const onSubmit = async (formData: any) => {
+    const collectedformData = { ...formData, rememberMe: rememberMe };
+    const res = await fetch("http://www.domain.com/register/sen-code", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(collectedformData),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      router.push("/home");
+    }
+    if (!res.ok) {
+      setError(data.message);
+    }
   };
 
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 500 : 150 }}
+      contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 100 : 60 }}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="always"
     >

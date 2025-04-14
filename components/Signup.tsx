@@ -10,13 +10,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useKeyboardVisibility } from "@/hooks/useKeyboardVisibility";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Signup = ({
   setState,
+  setMobile,
 }: {
   setState: React.Dispatch<React.SetStateAction<string>>;
+  setMobile: React.Dispatch<React.SetStateAction<string>>;
 }) => {
+  const [error, setError] = useState("");
+
   const isKeyboardVisible = useKeyboardVisibility();
 
   useEffect(() => {
@@ -31,14 +35,28 @@ const Signup = ({
     resolver: zodResolver(signupSchema),
   });
 
-  const onSubmit = (data: any) => {
-    setState("verification");
+  const onSubmit = async (formData: any) => {
+    const res = await fetch("http://www.domain.com/register/sen-code", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setState("verification");
+      setMobile(formData.mobile);
+    }
+    if (!res.ok) {
+      setError(data.message);
+    }
   };
 
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 500 : 150 }}
+      contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 100 : 60 }}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="always"
     >
@@ -53,9 +71,9 @@ const Signup = ({
           label={"Phone Number*"}
           icon={<Ionicons name="call-outline" size={16} />}
           placeholder="Enter your phone number..."
-          name="phone"
+          name="mobile"
           control={control}
-          error={errors.phone?.message}
+          error={errors.mobile?.message}
         />
 
         <View style={styles.row}></View>

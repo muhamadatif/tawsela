@@ -16,7 +16,7 @@ export const loginSchema = z.object({
 });
 
 export const signupSchema = z.object({
-  phone: z
+  mobile: z
     .string({ required_error: "Phone is required" })
     .regex(/^01[0125][0-9]{8}$/, "Enter a valid phone number"),
 });

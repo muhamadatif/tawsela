@@ -12,14 +12,30 @@ import { COLORS } from "@/constants/Colors";
 import { OtpInput } from "react-native-otp-entry";
 
 const Verification = ({
+  mobile,
   setState,
 }: {
+  mobile: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
 
-  const handleValidate = () => {
-    setState("register");
+  const handleValidate = async () => {
+    const res = await fetch("http://www.domain.com/register/verify-mobile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code: otp, mobile }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      setState("register");
+    }
+    if (!res.ok) {
+      setError(data.message);
+    }
   };
   return (
     <ScrollView

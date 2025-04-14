@@ -14,6 +14,7 @@ import { useRouter } from "expo-router";
 import { useKeyboardVisibility } from "@/hooks/useKeyboardVisibility";
 
 const Register = () => {
+  const [error, setError] = useState("");
   const isKeyboardVisible = useKeyboardVisibility();
 
   const router = useRouter();
@@ -27,14 +28,27 @@ const Register = () => {
     mode: "onTouched",
   });
 
-  const onSubmit = (data: any) => {
-    router.replace("/home");
+  const onSubmit = async (formData: any) => {
+    const res = await fetch("http://www.domain.com/register/sen-code", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      router.replace("/home");
+    }
+    if (!res.ok) {
+      setError(data.message);
+    }
   };
 
   return (
     <ScrollView
       style={styles.container}
-      contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 500 : 150 }}
+      contentContainerStyle={{ paddingBottom: isKeyboardVisible ? 100 : 60 }}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="always"
     >
