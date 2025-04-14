@@ -23,20 +23,23 @@ const Verification = ({
   const [error, setError] = useState("");
 
   const handleValidate = async () => {
-    const res = await fetch("https://localhost:7211/register/verify-mobile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ code: otp, mobile }),
-    });
-    const data = await res.json();
-    if (res.ok) {
+    const res: any = await fetch(
+      "https://localhost:7211/register/verify-mobile",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code: otp, mobile }),
+      }
+    );
+    // const data = await res.json();
+    if (res.isSuccess) {
       setState("register");
     }
-    if (!res.ok) {
-      setError(data.message);
-    }
+    //   if (!res.ok) {
+    //     setError(data.message);
+    //   }
   };
   return (
     <ScrollView

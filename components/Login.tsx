@@ -108,7 +108,7 @@ const Login = ({
           <Text
             style={{
               fontWeight: "900",
-              color: COLORS.primary,
+              color: COLORS.primaryDark,
               fontSize: 16,
             }}
           >
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   header: {
-    color: COLORS.primary,
+    color: COLORS.secondary,
     fontWeight: "bold",
     fontSize: 30,
   },

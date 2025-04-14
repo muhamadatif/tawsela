@@ -40,7 +40,7 @@ const BottomSheetComponent = forwardRef<Ref, Props>(
         enableDynamicSizing={true}
         backgroundStyle={{
           borderRadius: 20,
-          backgroundColor: COLORS.gray[100],
+          backgroundColor: COLORS.tertiary,
         }}
         handleIndicatorStyle={{ backgroundColor: COLORS.gray[300], width: 50 }}
         onDismiss={onDismiss}

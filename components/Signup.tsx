@@ -36,20 +36,18 @@ const Signup = ({
   });
 
   const onSubmit = async (formData: any) => {
-    const res = await fetch("https://localhost:7211/register/sen-code", {
+    console.log(formData);
+
+    const res: any = await fetch("https://localhost:7211/register/send-code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     });
-    const data = await res.json();
-    if (res.ok) {
+    if (res.isSuccess) {
       setState("verification");
       setMobile(formData.mobile);
-    }
-    if (!res.ok) {
-      setError(data.message);
     }
   };
 
